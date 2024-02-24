@@ -1,0 +1,187 @@
+# load CSV file into "pandas" data frame
+titanic = pandas.read_csv('titanic.csv')
+
+# show some of the data
+titanic
+
+titanic = titanic.drop(["PassengerId", "Ticket", "Cabin", "Fare"], axis = 1)
+titanic
+
+# missing values
+titanic.isna().sum()
+
+# enlever les missing values
+titanic = titanic.dropna()
+
+# Compter le nombre de valeurs
+titanic["Survived"].value_counts(normalize=True)
+
+# décrire un tableau
+titanic["Age"].describe()
+
+
+# Moyenne, écart-type et quantile
+print(numpy.mean(titanic["Age"]))
+print(numpy.std(titanic["Age"]))
+print(numpy.quantile(titanic["Age"], [0.25, 0.5, 0.75]))
+
+# histogramme
+import matplotlib.pyplot as plt
+plt.hist(titanic["Age"])
+plt.show()
+
+# Stylisable
+plt.hist(titanic["Age"], bins = 50, edgecolor="black", color = "orange")
+plt.title("A view on the passengers' age")
+plt.xlabel("Age (years)")
+plt.ylabel("Count")
+plt.show()
+
+# Boxplot
+from plotnine import geom_boxplot,coord_flip
+(ggplot(titanic, aes(x = "Sex", y = "Age")) + geom_boxplot() + coord_flip())
+
+
+# Stylisable
+
+from plotnine import scale_color_manual
+(ggplot(titanic, aes(x = "Pclass", y = "Age", colour = "Sex")) + geom_boxplot() + coord_flip() + \
+    scale_color_manual(values = ["red", "black"]) + xlab("Ticket class"))
+
+# Regrouper des données par rapport à 2 colonnes
+Amsterdam.groupby(["property_type"])[["accommodates"]]
+
+#  Filtrer par une donnée dans le tableau
+Amsterdam.query('property_type == "Boat"')
+
+# Créer un intervalle de confiance
+import numpy as np
+import scipy.stats as st
+
+# create 90% confidence interval
+print(st.norm.interval(confidence=0.90, loc=np.mean(X2), scale=st.sem(X2)))
+
+
+##################################
+
+import numpy as np
+import scipy.stats as st
+
+### P-value et test statistique pour un E(X) = E(Y) a invalider
+# Generate some example data
+
+strict_cancel_prices = test5  # Example prices for strict cancellation
+flexible_cancel_prices = test3  # Example prices for flexible cancellation
+
+# Perform t-test for independent samples
+t_statistic, p_value = st.ttest_ind(strict_cancel_prices, flexible_cancel_prices)
+
+# Set the significance level
+alpha = 0.05
+
+# Print the results
+print(f'T-statistic: {t_statistic}')
+print(f'P-value: {p_value}')
+
+# Check for statistical significance
+if p_value < alpha:
+    print('Reject the null hypothesis: The mean prices are different.')
+else:
+    print('Fail to reject the null hypothesis: There is no significant difference in mean prices.')
+###############################""
+
+
+## first generate bivariate Normal that looks like Figure 6(a).
+# mean of the x-component
+meanx = 3
+# mean of the y-component
+meany = 60000
+# standard deviation of the x-component
+scalex = 1
+# standard deviation of the y-component
+scaley = 15000
+# correlation (between -1 and +1)
+rho = +0.3
+# compute covariance matrix
+cov = [[scalex**2, scalex * scaley * rho],[scalex * scaley * rho, scaley**2]]
+# generate samples from bivariate Normal distribution
+samples = stats.multivariate_normal(mean = [meanx, meany], cov = cov).rvs(size = 1000)
+# convert to pandas DataFrame
+pd = pandas.DataFrame(data = samples, columns = ["neuro", "salary"])
+pd
+## scatter plot of samples
+(ggplot(pd, aes(x = "neuro", y = "salary")) + geom_point() + geom_smooth(method='lm', color = "cornflowerblue"))var=numpy.std(Test["totalwgt_kg"])**2
+moy=numpy.mean(Test["totalwgt_kg"])
+D=moy2-1.96*(numpy.sqrt(var2/2647))
+D
+
+# Membre de droite de l'intervalle de confiance (95%)
+var=numpy.std(Test["totalwgt_kg"])**2
+moy=numpy.mean(Test["totalwgt_kg"])
+D=moy2+1.96*(numpy.sqrt(var2/2647))
+D
+
+#####################################"
+
+### Faire un scatter plot
+
+## first generate bivariate Normal that looks like Figure 6(a).
+# mean of the x-component
+meanx = 3
+# mean of the y-component
+meany = 60000
+# standard deviation of the x-component
+scalex = 1
+# standard deviation of the y-component
+scaley = 15000
+# correlation (between -1 and +1)
+rho = +0.3
+# compute covariance matrix
+cov = [[scalex**2, scalex * scaley * rho],[scalex * scaley * rho, scaley**2]]
+# generate samples from bivariate Normal distribution
+samples = stats.multivariate_normal(mean = [meanx, meany], cov = cov).rvs(size = 1000)
+# convert to pandas DataFrame
+pd = pandas.DataFrame(data = samples, columns = ["neuro", "salary"])
+pd
+## scatter plot of samples
+(ggplot(pd, aes(x = "neuro", y = "salary")) + geom_point() + geom_smooth(method='lm', color = "cornflowerblue"))
+
+#####################################################"
+
+# Missing values v2
+df.info()
+
+#Scatter plot v2
+x = df.culmen_depth_mm
+y = df.culmen_length_mm
+sns.lmplot(data = df, x = "culmen_depth_mm", y = "culmen_length_mm", ci = None, line_kws=dict(color="red"))
+plt.xlabel("Culmen depth (mm)")
+plt.ylabel("Culmen length (mm)")
+plt.text(18, 57, "correlation = " + str(round(x.corr(y), 2)), fontsize=15);
+
+# Colorer les groupes (ici par espèces)
+
+sns.lmplot(data = df, x = "culmen_depth_mm", y = "culmen_length_mm", ci = None, line_kws=dict(color="blue"))
+plt.xlabel("Culmen depth (mm)")
+plt.ylabel("Culmen length (mm)")
+plt.text(18, 57, "correlation = " + str(round(x.corr(y), 2)), fontsize=15);
+sns.scatterplot(data=df, x="culmen_depth_mm", y="culmen_length_mm", hue="species")
+
+# Avoir la plus petite valeur (donne la ligne) (ici pour le rating)
+cereals[cereals["rating"]==cereals["rating"].min()]
+
+
+# Compter les variables catégorielles
+cereals[["mfr", "type"]].value_counts()
+
+# Correlation heatmap
+#The following plot shows the correlation between the different numerical columns. 
+#The correlation is between -1 and +1, and measures the level of association between two variables: 
+#if the correlation is close to one, it means that large values of one variable occur when there are large values of the other variable, and vice versa.
+
+plt.figure(figsize=(12, 10))
+numeric_cereals = cereals[['calories', 'weight', 'protein', 'fat', 'fiber', 'sodium', 'carbo', 'sugars','potass', 'vitamins', 'rating']]
+mask = numpy.tril(numeric_cereals.corr())
+sns.heatmap(numeric_cereals.corr(), cmap="coolwarm", annot=True, fmt='.1g', square=True, mask=mask);
+
+
