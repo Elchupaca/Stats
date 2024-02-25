@@ -1,5 +1,9 @@
+# Upload CSVfile by clicking on file and on the arrow on the left 
+
 # load CSV file into "pandas" data frame
 titanic = pandas.read_csv('titanic.csv')
+
+# Upload CSVfile by clicking on file and on the arrow on the left 
 
 # show some of the data
 titanic
