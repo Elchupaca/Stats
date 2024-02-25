@@ -68,11 +68,10 @@ print(st.norm.interval(confidence=0.90, loc=np.mean(X2), scale=st.sem(X2)))
 
 
 ##################################
-
+### P-value et test statistique pour un E(X) = E(Y) a invalider
 import numpy as np
 import scipy.stats as st
 
-### P-value et test statistique pour un E(X) = E(Y) a invalider
 # Generate some example data
 
 strict_cancel_prices = test5  # Example prices for strict cancellation
@@ -93,30 +92,11 @@ if p_value < alpha:
     print('Reject the null hypothesis: The mean prices are different.')
 else:
     print('Fail to reject the null hypothesis: There is no significant difference in mean prices.')
-###############################""
 
-### Créer un Scatterplot
 
-# first generate bivariate Normal that looks like Figure 6(a).
-# mean of the x-component
-meanx = 3
-# mean of the y-component
-meany = 60000
-# standard deviation of the x-component
-scalex = 1
-# standard deviation of the y-component
-scaley = 15000
-# correlation (between -1 and +1)
-rho = +0.3
-# compute covariance matrix
-cov = [[scalex**2, scalex * scaley * rho],[scalex * scaley * rho, scaley**2]]
-# generate samples from bivariate Normal distribution
-samples = stats.multivariate_normal(mean = [meanx, meany], cov = cov).rvs(size = 1000)
-# convert to pandas DataFrame
-pd = pandas.DataFrame(data = samples, columns = ["neuro", "salary"])
-pd
-## scatter plot of samples
-(ggplot(pd, aes(x = "neuro", y = "salary")) + geom_point() + geom_smooth(method='lm', color = "cornflowerblue"))var=numpy.std(Test["totalwgt_kg"])**2
+#################################"
+# Membre de gauche de l'intervalle de confiance (95%)
+var=numpy.std(Test["totalwgt_kg"])**2
 moy=numpy.mean(Test["totalwgt_kg"])
 D=moy2-1.96*(numpy.sqrt(var2/2647))
 D
