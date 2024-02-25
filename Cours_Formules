@@ -95,8 +95,9 @@ else:
     print('Fail to reject the null hypothesis: There is no significant difference in mean prices.')
 ###############################""
 
+### Créer un Scatterplot
 
-## first generate bivariate Normal that looks like Figure 6(a).
+# first generate bivariate Normal that looks like Figure 6(a).
 # mean of the x-component
 meanx = 3
 # mean of the y-component
