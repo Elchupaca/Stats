@@ -21,6 +21,12 @@ titanic = titanic.dropna()
 # Compter le nombre de valeurs
 titanic["Survived"].value_counts(normalize=True)
 
+#Obtenir une proportion
+
+proportion_less_than_80 = len(df[df['running time'] < 80]) / len(df)
+print(proportion_less_than_80)
+
+
 # décrire un tableau
 titanic["Age"].describe()
 
@@ -59,9 +65,22 @@ Amsterdam.groupby(["property_type"])[["accommodates"]]
 #  Filtrer par une donnée dans le tableau
 Amsterdam.query('property_type == "Boat"')
 
+#add a column
+df['ratio'] = df['box office'] / df['budget']
+
+# Sort the DataFrame by the 'ratio' column in descending order
+df_sorted = df.sort_values(by='ratio', ascending=False)
+
+# Select the top five films
+top_five_films = df_sorted.head(5)
+
+# Créer une colonne avec une condition liée à une colonne (ici vrai ou faux)
+df['original'] = df['based on'].apply(lambda x: "True" if x == "Original" else "False")
+
 # Créer un intervalle de confiance
 import numpy as np
 import scipy.stats as st
+
 
 # create 90% confidence interval
 print(st.norm.interval(confidence=0.90, loc=np.mean(X2), scale=st.sem(X2)))
@@ -168,6 +187,19 @@ cereals[["mfr", "type"]].value_counts()
 plt.figure(figsize=(12, 10))
 numeric_cereals = cereals[['calories', 'weight', 'protein', 'fat', 'fiber', 'sodium', 'carbo', 'sugars','potass', 'vitamins', 'rating']]
 mask = numpy.tril(numeric_cereals.corr())
+
 sns.heatmap(numeric_cereals.corr(), cmap="coolwarm", annot=True, fmt='.1g', square=True, mask=mask);
+
+#####################################
+
+#Créer une table de contingence (ici entre les noteam et le genre) (pour les variables binaires)
+import scipy.stats as stats
+table = df.groupby("noteam")["Gender"].value_counts().unstack()
+
+#Pour effectuer un teste d'indépendance a partir de la table
+stats.chi2_contingency(table, correction = False)
+
+############################
+
 
 
