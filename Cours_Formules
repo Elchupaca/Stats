@@ -15,6 +15,12 @@ titanic
 # missing values
 titanic.isna().sum()
 
+ ou
+#Visualisation:
+
+import missingno as msno
+msno.matrix(titanic);
+
 # enlever les missing values
 titanic = titanic.dropna()
 
@@ -200,6 +206,124 @@ table = df.groupby("noteam")["Gender"].value_counts().unstack()
 stats.chi2_contingency(table, correction = False)
 
 ############################
+
+Algorithme des K-means
+
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters=3, init='k-means++',random_state=42)
+y = kmeans.fit_predict(df)
+print(y)
+
+cereals['cluster'] = y
+
+cereals.groupby(['cluster']).mean(numeric_only = True)
+
+
+
+#####################################################################"
+
+import numpy # for numerical methods
+import scipy.stats as stats # for standard probability distributions
+import pandas # for data frames
+import matplotlib.pyplot as plt # for plotting
+plt.rcParams['figure.figsize'] = 5, 3 # specifying figure sizes
+plt.style.use("grayscale") # a theme that applies to all generated plots
+import seaborn as sns # for nice plots too
+
+###########################################################################"
+# Visualiser dans le temps
+
+from datetime import datetime
+challenger.date = pandas.to_datetime(challenger.date)
+sns.scatterplot(data = challenger, x = "date", y = "failure");
+
+
+
+##############################################################"
+
+#Conduire une régression logistique
+#On fait une régression logistique Ce code effectue une régression logistique pour examiner la relation entre les variables explicatives 'téléphone', 'musique', 'coffee daily' et la variable cible 'missed party'.
+
+#Pseudo R-squared : Une mesure de l'adéquation du modèle. Ici, la valeur est de 0.03466, ce qui suggère que le modèle explique environ 3,5 % de la variance dans la variable dépendante
+
+#Log-Likelihood : La valeur de la fonction log-vraisemblance pour le modèle ajusté. Plus la valeur est élevée, meilleur est l'ajustement du modèle.
+
+#Un coef de corrélation négatif montre que croissent inversement
+
+Y = df.dropna()['missed party']
+X = sm.add_constant(df.dropna()[['téléphone', 'musique', "coffee daily"]]).astype(float)
+mod = sm.Logit(Y, X)
+res = mod.fit()
+print(res.summary())
+
+
+# Visualisation de la corrélation entre 2 variables
+temperature_grid = numpy.linspace(start = 30, stop = 100, num = 50)
+test_set = pandas.DataFrame(data = {"const": numpy.ones(len(temperature_grid)), "temperature": temperature_grid})
+test_set["probability of failure"] =  logitreg.predict(sm.add_constant(temperature_grid))
+fig, ax = plt.subplots()
+sns.lineplot(data = test_set, x = "temperature", y = "probability of failure", color = "gray", ax = ax)
+plt.axvline(31, 0, 1, color = "black", linestyle = "--")
+sns.scatterplot(data = challenger, x = "temperature", y = "failure", ax = ax);
+plt.xlabel("")
+plt.ylabel("");
+
+
+######################################################""
+# Régression linéaire
+
+
+Fait une régression linéaire pour analyser la corrélation avec le coeeficient de correlation par rapport a la santé mentale
+
+Plus le adjusted R squared est élevé et moins il y'a d'erreur possible
+
+Et on a entre crochets l'intervalle de confiance
+
+# import statsmodels
+import statsmodels.api as sm
+# perform regression of `Age` on everything else
+Y = titanic[~titanic.Age.isnull()]['Age']
+X = sm.add_constant(titanic[~titanic.Age.isnull()].drop(['Age', 'Survived'], axis=1)).astype(float)
+mod = sm.OLS(Y, X)
+res = mod.fit()
+print(res.summary())
+
+
+OU
+
+Y = df["quality"]
+X = df[["alcohol", "fixed acidity"]]
+mod_train = sm.OLS(Y, sm.add_constant(X))
+res_train = mod_train.fit()
+res_train.summary()
+
+
+OU
+
+import statsmodels.api as sm
+Y = df.dropna()['santé mentale']
+X = sm.add_constant(df.dropna()[['musique', 'sport']]).astype(float)
+mod = sm.OLS(Y, X)
+res = mod.fit()
+print(res.summary())
+
+#######################################################""
+
+#Data viz pour savoir quand les gens ont répondu à un sondage avec une courbe
+
+from datetime import datetime
+df["timestamp"] = pandas.to_datetime(df["timestamp"], format = '%Y-%m-%d %H:%M:%S.%f')
+df["timestamp"].plot();
+
+
+
+
+
+
+
+
+
+
 
 
 
